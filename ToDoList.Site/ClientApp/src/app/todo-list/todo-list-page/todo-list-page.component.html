@@ -1,0 +1,34 @@
+<mat-card>
+    <mat-card-title>To-Do List</mat-card-title>
+    <mat-card-content>
+        <span *ngIf="doneItems?.length === 0 && inProgressItems?.length === 0">У вас пока нет задач</span>
+        <h3>Нужно сделать</h3>
+        <mat-list *ngIf="inProgressItems && inProgressItems.length > 0" role="list">
+            <tl-todo-list-item *ngFor="let item of inProgressItems"
+                               [item]="item"
+                               role="listitem"
+                               (done)="completeTodo($event)"
+                               (delete)="deleteTodo($event)">
+            </tl-todo-list-item>
+        </mat-list>
+        <h3>Сделано</h3>
+        <mat-list *ngIf="doneItems && doneItems.length > 0" role="list">
+            <tl-todo-list-item *ngFor="let item of doneItems" [item]="item" role="listitem"
+                               (delete)="deleteTodo($event)">
+            </tl-todo-list-item>
+        </mat-list>
+    </mat-card-content>
+    <mat-card-actions>
+        <form [formGroup]="form">
+            <mat-form-field class="example-form-field" appearance="fill">
+                <mat-label>Title</mat-label>
+                <input formControlName="title" matInput type="text">
+                <button *ngIf="titleControl.value" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="titleControl.setValue(null)">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </form>
+        <button mat-flat-button color="primary" (click)="addItem()">Add</button>
+    </mat-card-actions>
+</mat-card>

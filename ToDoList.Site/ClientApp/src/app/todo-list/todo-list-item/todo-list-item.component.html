@@ -1,0 +1,9 @@
+<mat-list-item role="listitem">
+    {{item.title}}
+    <button style="margin: 0 10px" *ngIf="!item.isDone" mat-raised-button color="warn" aria-label="Done" (click)="doneClicked()">
+        Done
+    </button>
+    <button style="margin: 0 10px" mat-raised-button color="primary" aria-label="Delete" (click)="deleteClicked()">
+        Delete
+    </button>
+</mat-list-item>

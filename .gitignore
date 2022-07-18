@@ -258,3 +258,4 @@ pub/
 # Project files
 logs/
 src/ToDoList.Site/ClientApp/dist
+.angular
