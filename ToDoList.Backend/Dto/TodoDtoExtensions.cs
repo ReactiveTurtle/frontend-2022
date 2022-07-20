@@ -9,6 +9,7 @@ namespace To_Do_List_Backend.Dto
             return new Todo
             {
                 Id = todoDto.Id,
+                Name = todoDto.Name,
                 Title = todoDto.Title,
                 IsDone = todoDto.IsDone
             };
@@ -19,6 +20,7 @@ namespace To_Do_List_Backend.Dto
             return new TodoDto
             {
                 Id = todoDto.Id,
+                Name = todoDto.Name,
                 Title = todoDto.Title,
                 IsDone = todoDto.IsDone
             };

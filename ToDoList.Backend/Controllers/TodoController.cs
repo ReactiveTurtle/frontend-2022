@@ -5,7 +5,7 @@ using To_Do_List_Backend.Services;
 namespace To_Do_List_Backend.Controllers
 {
     [ApiController]
-    [Route( "rest/{controller}")]
+    [Route( "rest/{controller}" )]
     public class TodoController : ControllerBase
     {
         private readonly ITodoService _todoService;
@@ -37,7 +37,7 @@ namespace To_Do_List_Backend.Controllers
             {
                 return Ok( _todoService.GetTodo( todoId ).ConvertToTodoDto() );
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
                 return BadRequest( ex.Message );
             }
@@ -78,7 +78,8 @@ namespace To_Do_List_Backend.Controllers
         {
             try
             {
-                return Ok( _todoService.CompleteTodo( todoId ) );
+                _todoService.CompleteTodo( todoId );
+                return Ok();
             }
             catch ( Exception ex )
             {

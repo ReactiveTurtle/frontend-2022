@@ -259,3 +259,4 @@ pub/
 logs/
 src/ToDoList.Site/ClientApp/dist
 .angular
+.idea

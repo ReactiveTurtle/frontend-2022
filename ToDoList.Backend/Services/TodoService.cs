@@ -1,16 +1,19 @@
 ﻿using To_Do_List_Backend.Domain;
 using To_Do_List_Backend.Dto;
-using To_Do_List_Backend.Repositories;
+using To_Do_List_Backend.Infrastructure.Data.TodoModel;
+using To_Do_List_Backend.Infrastructure.UoW;
 
 namespace To_Do_List_Backend.Services
 {
     public class TodoService : ITodoService
     {
         private readonly ITodoRepository _todoRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public TodoService( ITodoRepository todoRepository )
+        public TodoService( ITodoRepository todoRepository, IUnitOfWork unitOfWork )
         {
             _todoRepository = todoRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public List<Todo> GetTodos()
@@ -18,7 +21,7 @@ namespace To_Do_List_Backend.Services
             return _todoRepository.GetTodos();
         }
 
-        public int CompleteTodo( int todoId )
+        public void CompleteTodo( int todoId )
         {
             Todo todo = _todoRepository.Get( todoId );
             if ( todo == null )
@@ -26,16 +29,10 @@ namespace To_Do_List_Backend.Services
                 throw new Exception( $"{nameof( Todo )} not found, #Id - {todoId}" );
             }
 
-            if ( todo.IsDone )
-            {
-                return todo.Id;
-            }
-            else
-            {
-                todo.SetComplete();
-            }
+            todo.SetComplete();
+            _todoRepository.Update( todo );
 
-            return _todoRepository.Update( todo );
+            _unitOfWork.SaveEntitiesAsync();
         }
 
         public int CreateTodo( TodoDto todo )
@@ -47,7 +44,10 @@ namespace To_Do_List_Backend.Services
 
             Todo todoEntity = todo.ConvertToTodo();
 
-            return _todoRepository.Create( todoEntity );
+            int id = _todoRepository.Create( todoEntity );
+            _unitOfWork.SaveEntitiesAsync();
+
+            return id;
         }
 
         public void DeleteTodo( int todoId )
@@ -59,6 +59,7 @@ namespace To_Do_List_Backend.Services
             }
 
             _todoRepository.Delete( todo );
+            _unitOfWork.SaveEntitiesAsync();
         }
 
         public Todo GetTodo( int todoId )

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using To_Do_List_Backend.Domain;
 
-namespace To_Do_List_Backend.Repositories
+namespace To_Do_List_Backend.Infrastructure.Data.TodoModel
 {
     public interface ITodoRepository
     {
@@ -9,6 +9,6 @@ namespace To_Do_List_Backend.Repositories
         Todo Get( int id );
         int Create( Todo todo );
         void Delete( Todo todo );
-        int Update( Todo todo );
+        void Update( Todo todo );
     }
 }

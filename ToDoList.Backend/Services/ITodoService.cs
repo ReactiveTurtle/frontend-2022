@@ -7,7 +7,7 @@ namespace To_Do_List_Backend.Services
     {
         List<Todo> GetTodos();
         Todo GetTodo( int todoId );
-        int CompleteTodo( int todoId );
+        void CompleteTodo( int todoId );
         int CreateTodo( TodoDto todo );
         void DeleteTodo( int todoId );
         
